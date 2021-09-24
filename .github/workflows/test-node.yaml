@@ -148,12 +148,12 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v2
 
-      - name: Try load from cache
-        id: cache-image
-        uses: actions/cache@v2
-        with:
-          path: ${GITHUB_WORKSPACE}/cache
-          key: ${{ env.CACHE_KEY_CLIENT}}
+      # - name: Try load from cache
+      #   id: cache-image
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${GITHUB_WORKSPACE}/cache
+      #     key: ${{ env.CACHE_KEY_CLIENT}}
 
       - name: Prepare image labels and tags
         if: steps.cache-image.outputs.cache-hit != 'true'
@@ -195,11 +195,11 @@ jobs:
             LIBINDY_VERSION=1.13.0~1420
             user_id=1001
                     
-      - name: Touch Cache
-        if: steps.cache-image.outputs.cache-hit != 'true'
-        run: |
-          mkdir -p ${GITHUB_WORKSPACE}/cache
-          touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_CLIENT }}
+      # - name: Touch Cache
+      #   if: steps.cache-image.outputs.cache-hit != 'true'
+      #   run: |
+      #     mkdir -p ${GITHUB_WORKSPACE}/cache
+      #     touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_CLIENT }}
 
   node-tests:
     name: Node Tests
