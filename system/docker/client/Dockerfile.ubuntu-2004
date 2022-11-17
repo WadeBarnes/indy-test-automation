@@ -49,16 +49,20 @@ RUN apt-get install -y \
     libindy=${LIBINDY_VERSION} 
 
 ARG LIBSOVTOKEN_INSTALL
+ENV LIBSOVTOKEN_INSTALL=${LIBSOVTOKEN_INSTALL}
 ARG LIBSOVTOKEN_VERSION
-ENV LIBSOVTOKEN_INSTALL=$LIBSOVTOKEN_INSTALL
 ENV LIBSOVTOKEN_VERSION=${LIBSOVTOKEN_VERSION:-1.0.5}
-RUN if [ "$LIBSOVTOKEN_INSTALL" = "yes" ]; then \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45; \
-    apt-get update && apt-get install -y \
-    libsovtoken=${LIBSOVTOKEN_VERSION}; \
-    rm -rf /var/lib/apt/lists/*; \
+ARG LIBSOVTOKEN_REPO_COMPONENT
+ENV LIBSOVTOKEN_REPO_COMPONENT=${LIBSOVTOKEN_REPO_COMPONENT:-dev}
+RUN echo "LIBSOVTOKEN_INSTALL: ${LIBSOVTOKEN_INSTALL}"
+RUN if [ "${LIBSOVTOKEN_INSTALL}" = "yes" ]; then \
+        apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45 \
+        && rm /etc/apt/sources.list.d/sovrin* \
+        && add-apt-repository "deb https://sovrin.jfrog.io/artifactory/deb focal ${LIBSOVTOKEN_REPO_COMPONENT}" \
+        && apt-get update && apt-get install -y \
+                   libsovtoken=${LIBSOVTOKEN_VERSION} \
+        && rm -rf /var/lib/apt/lists/*; \
     fi
-
 
 # TODO workaround (suggested by http://click.pocoo.org/5/python3/)
 # to use pipenv's dependency 'click' (http://click.pocoo.org)
@@ -71,4 +75,3 @@ RUN chmod 700 /root/.ssh/test_key \
     && chown 600 -R /root/.ssh
 
 ENV IN_DOCKER_ENV yes
-

@@ -34,7 +34,8 @@ RUN apt-get update -y && apt-get install -y \
 
 # pip<10.0.0 is important. pip==10.0.0 doesn't work.
 RUN pip3 install -U \
-    'pip<10.0.0' \
+    # 'pip<10.0.0' \
+    pip \
     setuptools
 
 # Bionic-security-main for libssl1.0.0
@@ -90,30 +91,41 @@ RUN apt-get install -y \
     && ln -s /usr/lib/ursa/libursa.so /usr/lib/libursa.so
     
 ARG SOVRIN_INSTALL
-ARG SOVRIN_VERSION
 ENV SOVRIN_INSTALL=$SOVRIN_INSTALL
+ARG SOVRIN_VERSION
 ENV SOVRIN_VERSION=${SOVRIN_VERSION:-1.1.69}
 COPY . . 
-RUN if [ "$SOVRIN_INSTALL" = "yes" ]; then \
-    dpkg -i "sovrin.deb"; \
-    #    dpkg -i "sovrin_${SOVRIN_VERSION}_amd64.deb"; \
+
+# RUN echo "SOVRIN_INSTALL: ${SOVRIN_INSTALL}"
+# RUN if [ "${SOVRIN_INSTALL}" = "yes" ]; then \
+#     dpkg -i "sovrin.deb"; \
+#     #    dpkg -i "sovrin_${SOVRIN_VERSION}_amd64.deb"; \
+#     fi
+
+ARG TOKEN_PLUGINS_INSTALL
+ENV TOKEN_PLUGINS_INSTALL=${TOKEN_PLUGINS_INSTALL}
+ARG SOVTOKEN_REPO_COMPONENT
+ENV SOVTOKEN_REPO_COMPONENT=${SOVTOKEN_REPO_COMPONENT:-dev}
+ARG SOVTOKEN_VERSION
+ENV SOVTOKEN_VERSION=${SOVTOKEN_VERSION:-1.2.0-dev1663181681}
+ARG SOVTOKENFEES_VERSION
+ENV SOVTOKENFEES_VERSION=${SOVTOKENFEES_VERSION:-${SOVTOKEN_VERSION}}
+RUN echo "TOKEN_PLUGINS_INSTALL: ${TOKEN_PLUGINS_INSTALL}"
+RUN if [ "${TOKEN_PLUGINS_INSTALL}" = "yes" ]; then \
+        apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45 \
+        # && rm /etc/apt/sources.list.d/sovrin* \
+        # && add-apt-repository "deb https://sovrin.jfrog.io/artifactory/deb focal ${SOVTOKEN_REPO_COMPONENT}" \
+        && echo "deb https://sovrin.jfrog.io/artifactory/deb focal ${SOVTOKEN_REPO_COMPONENT}" >> /etc/apt/sources.list \
+        && apt-get update && apt-get install -y \
+                # ToDo:
+                #   - Need an Ubuntu 20.04 SOVRIN Build.
+                #    sovrin=${SOVRIN_VERSION} \
+                   sovtoken=${SOVTOKEN_VERSION} \
+                   sovtokenfees=${SOVTOKENFEES_VERSION} \
+        && rm -rf /var/lib/apt/lists/* \
+        && pip install /sovtoken /sovtokenfees; \
     fi
 
-ARG SOVTOKEN_VERSION
-ARG SOVTOKENFEES_VERSION
-ENV SOVTOKEN_VERSION=${SOVTOKEN_VERSION:-1.2.0-dev1663181681}
-ENV SOVTOKENFEES_VERSION=${SOVTOKENFEES_VERSION:-${SOVTOKEN_VERSION}}
-RUN if [ "$TOKEN_PLUGINS_INSTALL" = "yes" ]; then \
-# RUN \
-        set -ex; \
-        apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45; \
-        apt-get update && apt-get install -y \
-            sovrin=${SOVRIN_VERSION} \
-            sovtoken=${SOVTOKEN_VERSION} \
-            sovtokenfees=${SOVTOKENFEES_VERSION}; \
-        rm -rf /var/lib/apt/lists/*; \
-        pip install /sovtoken /sovtokenfees; \
-    fi
 # network config
 RUN echo " " >> /etc/indy/indy_config.py \
     && echo "NETWORK_NAME = 'sandbox'" >> /etc/indy/indy_config.py \
