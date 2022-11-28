@@ -1,7 +1,7 @@
 name: indy-test-automation
 on: 
   push:
-    branches: sovrin
+    branches: [sovrin]
   # workflow_dispatch:
   #   inputs:
   #     nodeVersion: 
@@ -47,16 +47,20 @@ env:
   INPUT_URSAVERSION: 0.3.2-1
   INPUT_PYZMQVERSION: 18.1.0
   INPUT_LIBINDYVERSION: 1.15.0~1625-bionic
-  INPUT_UBUNTUVERSION: ubuntu-2004
+  INPUT_UBUNTUVERSION: "ubuntu-2004"
   INPUT_NODEREPOCOMPONENT: dev
   INPUT_NODESOVRINREPOCOMPONENT:  master
   INPUT_CLIENTSOVRINREPOCOMPONENT:  master
   TEST_AUTOMATION_BRANCH: "main"
   INPUT_LIBSOVTOKEN_INSTALLL: "yes" 
   INPUT_LIBSOVTOKEN_VERSION: "1.0.5"
+  INPUT_LIBSOVTOKEN_REPO_COMPONENT: "dev"
   INPUT_TOKEN_PLUGINS_INSTALL: "yes" 
-#  SOVRIN_INSTALL: "yes" 
+  INPUT_SOVRIN_INSTALL: "yes"
+  INPUT_SOVRIN_VERSION: "1.1.97"
+  INPUT_SOVTOKEN_REPO_COMPONENT: "dev"
   INPUT_SOVTOKENFEES_VERSION: 1.2.0-dev166318168
+  INPUT_SOVTOKEN_VERSION: 1.2.0-dev166318168
 jobs:
   workflow-setup:
     name: Initialize Workflow
@@ -126,7 +130,7 @@ jobs:
             ${{ runner.os }}-buildx
 
       - name: Build and push image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ./ubuntu/base
           push: ${{ github.event_name != 'pull_request' }}
@@ -182,7 +186,7 @@ jobs:
 
       - name: Build and cache image
         if: steps.cache-image.outputs.cache-hit != 'true'
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ./system/docker/node
           file: ./system/docker/node/Dockerfile.${{ env.INPUT_UBUNTUVERSION }}
@@ -194,15 +198,17 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
           build-args: |
             NODE_REPO_COMPONENT=${{ env.INPUT_NODEREPOCOMPONENT }}
-            NODE_SOVRIN_REPO_COMPONENT=${{ env.INPUT_NODESOVRINREPOCOMPONENT}}
             INDY_NODE_VERSION=${{ env.INPUT_NODEVERSION }}
             INDY_PLENUM_VERSION=${{ env.INPUT_PLENUMVERSION }}
+            TOKEN_PLUGINS_INSTALL= ${{ env.INPUT_TOKEN_PLUGINS_INSTALL }}
+            SOVRIN_VERSION = ${{ env.INPUT_SOVRIN_VERSION }}
+            SOVRIN_INSTALL = ${{ env.INPUT_SOVRIN_INSTALL }}
+            SOVTOKEN_VERSION = ${{ env.INPUT_SOVTOKEN_VERSION }}
+            SOVTOKENFEES_VERSION = ${{ env.INPUT_SOVTOKENFEES_VERSION }}
+            SOVTOKEN_REPO_COMPONENT = ${{ env.INPUT_SOVTOKEN_REPO_COMPONENT }}
             URSA_VERSION=${{ env.INPUT_URSAVERSION }}
             PYTHON3_PYZMQ_VERSION=${{ env.INPUT_PYZMQVERSION }}
-            SOVTOKENFEES_VERSION=${{ env.INPUT_SOVTOKENFEES_VERSION }}
-            TOKEN_PLUGINS_INSTALL= ${{ env.INPUT_TOKEN_PLUGINS_INSTALL }}
-#            SOVRIN_INSTALL=${{ env.SOVRIN_INSTALL }}
-
+            NODE_SOVRIN_REPO_COMPONENT=${{ env.INPUT_NODESOVRINREPOCOMPONENT}}
           outputs: type=docker,dest=/tmp/node_image_${{ env.INPUT_UBUNTUVERSION }}.tar
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
@@ -254,7 +260,7 @@ jobs:
             ${{ runner.os }}-buildx
           
       - name: Build and cache image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ./system/docker/client/
           file: ./system/docker/client/Dockerfile.${{ env.INPUT_UBUNTUVERSION }}
@@ -271,6 +277,7 @@ jobs:
             DIND_IMAGE_NAME=dind:${{ env.INPUT_UBUNTUVERSION }}
             LIBSOVTOKEN_INSTALL= ${{ env.INPUT_LIBSOVTOKEN_INSTALL }}
             LIBSOVTOKEN_VERSION= ${{ env.INPUT_LIBSOVTOKEN_VERSION }}
+            LIBSOVTOKEN_REPO_COMPONENT = ${{ env.INPUT_LIBSOVTOKEN_REPO_COMPONENT }}
           outputs: type=docker,dest=/tmp/client_image_${{ env.INPUT_UBUNTUVERSION }}.tar
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
@@ -327,7 +334,7 @@ jobs:
         id: test_consensus
         run: |
           cd ./system/docker
-          sudo UBUNTU_VERSION="${{ env.INPUT_UBUNTUVERSION }}" IMAGE_REPOSITORY="ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/" CLIENT_IMAGE="client:${{ env.INPUT_UBUNTUVERSION }}" NODE_IMAGE="node-${{ env.INPUT_UBUNTUVERSION }}" ./run.sh system/indy-node-tests "-l -v --junit-xml=test_consensus-report.xml" indy-test-automation-network
+          sudo UBUNTU_VERSION="${{ env.INPUT_UBUNTUVERSION }}" IMAGE_REPOSITORY="ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/" CLIENT_IMAGE="client:${{ env.INPUT_UBUNTUVERSION }}" NODE_IMAGE="node-${{ env.INPUT_UBUNTUVERSION }}" ./run.sh system/indy-node-tests/ "-l -v --junit-xml=test_consensus-report.xml --payments" indy-test-automation-network
 
       - name: Publish Test Report
         if: success() || failure()
