@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -191,7 +191,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -246,7 +246,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -301,7 +301,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -356,7 +356,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -411,7 +411,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -466,7 +466,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -521,7 +521,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -576,7 +576,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -631,7 +631,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -686,7 +686,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -741,7 +741,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -796,7 +796,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -851,7 +851,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -906,7 +906,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -961,7 +961,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -1016,7 +1016,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -1071,7 +1071,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -1126,7 +1126,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -1181,7 +1181,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -1236,7 +1236,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
@@ -1291,7 +1291,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout hyperledger/indy-test-automation
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: hyperledger/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
