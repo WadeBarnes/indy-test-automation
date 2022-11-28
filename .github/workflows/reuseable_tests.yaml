@@ -36,13 +36,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -91,13 +91,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
       
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -146,13 +146,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -201,13 +201,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -256,13 +256,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -311,13 +311,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -366,13 +366,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -421,13 +421,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -476,13 +476,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -531,13 +531,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -586,13 +586,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -641,13 +641,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -696,13 +696,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -751,13 +751,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -806,13 +806,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -861,13 +861,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -916,13 +916,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -971,13 +971,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -1026,13 +1026,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
       
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -1081,13 +1081,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -1136,13 +1136,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -1191,13 +1191,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -1246,13 +1246,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
@@ -1301,13 +1301,13 @@ jobs:
           docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
 
       - name: Download client artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: client_image
           path: /tmp
 
       - name: Download node artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node_image
           path: /tmp
