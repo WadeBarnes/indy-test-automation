@@ -1,66 +1,184 @@
 name: indy-test-automation
 on: 
-  push:
-    branches: [sovrin]
-  # workflow_dispatch:
-  #   inputs:
-  #     nodeVersion: 
-  #       description: 'Version of Indy Node'
-  #       required: true
-  #     plenumVersion:
-  #       description: 'Version of Indy Plenum'
-  #       required: true
-  #     ursaVersion:
-  #       description: 'Version of Ursa'
-  #       required: true
-  #     pyzmqVersion:
-  #       description: 'Version of PYZMQ'
-  #       required: true
-  #       default: "18.1.0"
-  #     libIndyVersion: 
-  #       description: 'Version of Libindy'
-  #       required: true
-  #     ubuntuVersion:
-  #       description: 'Version of Ubuntu base image'
-  #       required: true
-  #       default: 'ubuntu-1604'
-  #     nodeRepoComponent:
-  #       description: 'Hyperledger Artifactory repository component of Indy-Node'
-  #       required: true
-  #       default: 'main'
-  #     nodeSovrinRepoComponent: 
-  #       description: 'Sovrin repository component of dependcies of Indy-Node artifacts'
-  #       required: true
-  #       default: 'master' 
-  #     clientSovrinRepoComponent: 
-  #       description: 'Sovrin repository component of Indy SDK artifacts'
-  #       required: true
-  #       default: 'master' 
-  #     sovtokenfeesVersion: 
-  #       description: 'Sovtokenfees version'
-  #       required: true
-  #       default: '1.2.0-dev166318168' 
+  # push:
+  #   branches: [sovrin]
+  workflow_call:
+    inputs:
+      nodeVersion: 
+        description: 'Version of Indy Node'
+        required: true
+        default: "1.13.2~rc3"
+      plenumVersion:
+        description: 'Version of Indy Plenum'
+        required: true
+        default: "1.13.1~rc2"
+      ursaVersion:
+        description: 'Version of Ursa'
+        required: true
+        default: "0.3.2-1"
+      pyzmqVersion:
+        description: 'Version of PYZMQ'
+        required: true
+        default: "18.1.0"
+      libIndyVersion: 
+        description: 'Version of Libindy'
+        required: true
+        default: "1.15.0~1625-bionic"
+      ubuntuVersion:
+        description: 'Version of Ubuntu base image'
+        required: true
+        default: 'ubuntu-2004'
+      nodeRepoComponent:
+        description: 'Hyperledger Artifactory repository component of Indy-Node'
+        required: true
+        default: 'rc'
+      nodeSovrinRepoComponent: 
+        description: 'Sovrin repository component of dependcies of Indy-Node artifacts'
+        required: true
+        default: 'master'
+      clientSovrinRepoComponent: 
+        description: 'Sovrin repository component of Indy SDK artifacts'
+        required: true
+        default: 'master'
+      testAutomationBranch:
+        description: "Branch of Indy-Test-Automation to use"
+        required: false
+        default: "sovrin"
+      libsovtokenInstall:
+        description: "Install Libsovtoken yes|no"
+        required: true
+        default: "yes"
+      libsovtokenVersion:
+        description: "Version of Libsovtoken to install"
+        required: false
+        default: "1.0.5"
+      libsovtokenRepoComponent:
+        description: 'Libsovtoken repository component of artifacts'
+        required: false
+        default: "dev"
+      tokenPluginInstall:
+        description: "Install Token-Plugin yes|no"
+        required: true
+        default: yes
+      sovrinInstall:
+        description: "Install Sovrin yes|no"
+        required: true
+        default: yes
+      sovrinVersion:
+        description: "Version of Sovrin"
+        required: true
+        default: "1.1.97"
+      sovtokenRepoComponent:
+        description: 'Sovtoken repository component of artifacts'
+        required: false
+        default: "dev"
+      sovtokenFeesVersion:
+        description: "Version of Sovtokenfees"
+        required: false
+        default: "1.2.0-dev1666268500"
+      sovtokenVersion:
+        description: "Version of Sovtoken"
+        required: false
+        default: "1.2.0-dev1666268500"
+  workflow_dispatch:
+    inputs:
+      nodeVersion: 
+        description: 'Version of Indy Node'
+        required: true
+        default: "1.13.2~rc3"
+      plenumVersion:
+        description: 'Version of Indy Plenum'
+        required: true
+        default: "1.13.1~rc2"
+      ursaVersion:
+        description: 'Version of Ursa'
+        required: true
+        default: "0.3.2-1"
+      pyzmqVersion:
+        description: 'Version of PYZMQ'
+        required: true
+        default: "18.1.0"
+      libIndyVersion: 
+        description: 'Version of Libindy'
+        required: true
+        default: "1.15.0~1625-bionic"
+      ubuntuVersion:
+        description: 'Version of Ubuntu base image'
+        required: true
+        default: 'ubuntu-2004'
+      nodeRepoComponent:
+        description: 'Hyperledger Artifactory repository component of Indy-Node'
+        required: true
+        default: 'rc'
+      nodeSovrinRepoComponent: 
+        description: 'Sovrin repository component of dependcies of Indy-Node artifacts'
+        required: true
+        default: 'master'
+      clientSovrinRepoComponent: 
+        description: 'Sovrin repository component of Indy SDK artifacts'
+        required: true
+        default: 'master'
+      testAutomationBranch:
+        description: "Branch of Indy-Test-Automation to use"
+        required: false
+        default: "sovrin"
+      libsovtokenInstall:
+        description: "Install Libsovtoken yes|no"
+        required: true
+        default: "yes"
+      libsovtokenVersion:
+        description: "Version of Libsovtoken to install"
+        required: false
+        default: "1.0.5"
+      libsovtokenRepoComponent:
+        description: 'Libsovtoken repository component of artifacts'
+        required: false
+        default: "dev"
+      tokenPluginInstall:
+        description: "Install Token-Plugin yes|no"
+        required: true
+        default: yes
+      sovrinInstall:
+        description: "Install Sovrin yes|no"
+        required: true
+        default: yes
+      sovrinVersion:
+        description: "Version of Sovrin"
+        required: true
+        default: "1.1.97"
+      sovtokenRepoComponent:
+        description: 'Sovtoken repository component of artifacts'
+        required: false
+        default: "dev"
+      sovtokenFeesVersion:
+        description: "Version of Sovtokenfees"
+        required: false
+        default: "1.2.0-dev1666268500"
+      sovtokenVersion:
+        description: "Version of Sovtoken"
+        required: false
+        default: "1.2.0-dev1666268500"
 
 env:
-  INPUT_NODEVERSION: 1.13.2~rc3
-  INPUT_PLENUMVERSION: 1.13.1~rc2
-  INPUT_URSAVERSION: 0.3.2-1
-  INPUT_PYZMQVERSION: 22.3.0
-  INPUT_LIBINDYVERSION: 1.15.0~1625-bionic
-  INPUT_UBUNTUVERSION: "ubuntu-2004"
-  INPUT_NODEREPOCOMPONENT: rc
-  INPUT_NODESOVRINREPOCOMPONENT:  master
-  INPUT_CLIENTSOVRINREPOCOMPONENT:  master
-  TEST_AUTOMATION_BRANCH: "sovrin"
-  INPUT_LIBSOVTOKEN_INSTALL: "yes" 
-  INPUT_LIBSOVTOKEN_VERSION: "1.0.5"
-  INPUT_LIBSOVTOKEN_REPO_COMPONENT: "dev"
-  INPUT_TOKEN_PLUGINS_INSTALL: "yes" 
-  INPUT_SOVRIN_INSTALL: "yes"
-  INPUT_SOVRIN_VERSION: "1.1.97"
-  INPUT_SOVTOKEN_REPO_COMPONENT: "dev"
-  INPUT_SOVTOKENFEES_VERSION: 1.2.0-dev1666268500
-  INPUT_SOVTOKEN_VERSION: 1.2.0-dev1666268500
+  INPUT_NODEVERSION: ${{ inputs.nodeVersion }}
+  INPUT_PLENUMVERSION: ${{ inputs.plenumVersion }}
+  INPUT_URSAVERSION: ${{ inputs.ursaVersion }}
+  INPUT_PYZMQVERSION: ${{ inputs.pyzmqVersion }}
+  INPUT_LIBINDYVERSION: ${{ inputs.libIndyVersion }}
+  INPUT_UBUNTUVERSION: ${{ inputs.ubuntuVersion }}
+  INPUT_NODEREPOCOMPONENT: ${{ inputs.nodeRepoComponent }}
+  INPUT_NODESOVRINREPOCOMPONENT:  ${{ inputs.nodeSovrinRepoComponent }}
+  INPUT_CLIENTSOVRINREPOCOMPONENT: ${{ inputs.clientSovrinRepoComponent }}
+  TEST_AUTOMATION_BRANCH: ${{ inputs.testAutomationBranch }}
+  INPUT_LIBSOVTOKEN_INSTALL: ${{ inputs.libsovtokenInstall }} 
+  INPUT_LIBSOVTOKEN_VERSION: ${{ inputs.libsovtokenVersion }}
+  INPUT_LIBSOVTOKEN_REPO_COMPONENT: ${{ inputs.libsovtokenRepoComponent }}
+  INPUT_TOKEN_PLUGINS_INSTALL: ${{ inputs.tokenPluginInstall }} 
+  INPUT_SOVRIN_INSTALL: ${{ inputs.sovrinInstall }}
+  INPUT_SOVRIN_VERSION: ${{ inputs.sovrinVersion }}
+  INPUT_SOVTOKEN_REPO_COMPONENT: ${{ inputs.sovtokenRepoComponent }}
+  INPUT_SOVTOKENFEES_VERSION: ${{ inputs.sovtokenFeesVersion }}
+  INPUT_SOVTOKEN_VERSION: ${{ inputs.sovtokenVersion }}
 jobs:
   workflow-setup:
     name: Initialize Workflow
