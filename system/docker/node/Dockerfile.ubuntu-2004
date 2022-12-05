@@ -89,19 +89,7 @@ RUN apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     # fix missing path to libursa
     && ln -s /usr/lib/ursa/libursa.so /usr/lib/libursa.so
-    
-ARG SOVRIN_INSTALL
-ENV SOVRIN_INSTALL=$SOVRIN_INSTALL
-ARG SOVRIN_VERSION
-ENV SOVRIN_VERSION=${SOVRIN_VERSION:-1.1.69}
-COPY . . 
-
-# RUN echo "SOVRIN_INSTALL: ${SOVRIN_INSTALL}"
-# RUN if [ "${SOVRIN_INSTALL}" = "yes" ]; then \
-#     dpkg -i "sovrin.deb"; \
-#     #    dpkg -i "sovrin_${SOVRIN_VERSION}_amd64.deb"; \
-#     fi
-
+ 
 ARG TOKEN_PLUGINS_INSTALL
 ENV TOKEN_PLUGINS_INSTALL=${TOKEN_PLUGINS_INSTALL}
 ARG SOVTOKEN_REPO_COMPONENT
@@ -122,9 +110,19 @@ RUN if [ "${TOKEN_PLUGINS_INSTALL}" = "yes" ]; then \
                 #    sovrin=${SOVRIN_VERSION} \
                    sovtoken=${SOVTOKEN_VERSION} \
                    sovtokenfees=${SOVTOKENFEES_VERSION} \
-        && rm -rf /var/lib/apt/lists/* \
-        && pip install /sovtoken /sovtokenfees; \
+        && rm -rf /var/lib/apt/lists/*; \
+        # && pip install /sovtoken /sovtokenfees; \
     fi
+RUN pip install /sovtoken /sovtokenfees
+ARG SOVRIN_INSTALL
+ENV SOVRIN_INSTALL=$SOVRIN_INSTALL
+COPY . . 
+
+RUN echo "SOVRIN_INSTALL: ${SOVRIN_INSTALL}"
+RUN if [ "${SOVRIN_INSTALL}" = "yes" ]; then \
+    dpkg -i "sovrin.deb"; \
+    fi
+
 
 # network config
 RUN echo " " >> /etc/indy/indy_config.py \
