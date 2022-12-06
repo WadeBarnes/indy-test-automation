@@ -255,7 +255,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Upload node docker image artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: node_image
           path: /tmp/node_image_${{ env.INPUT_UBUNTUVERSION }}.tar
@@ -325,7 +325,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Upload client docker image artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: client_image
           path: /tmp/client_image_${{ env.INPUT_UBUNTUVERSION }}.tar
@@ -381,7 +381,7 @@ jobs:
 
       - name: Publish Test Report
         if: success() || failure()
-        uses: scacap/action-surefire-report@v1.0.7
+        uses: scacap/action-surefire-report@v1
         continue-on-error: true
         with:
           check_name: test_consensus Test Report
@@ -391,7 +391,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_consensus.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_consensus
           path: test-result-indy-test-automation-test_consensus.txt

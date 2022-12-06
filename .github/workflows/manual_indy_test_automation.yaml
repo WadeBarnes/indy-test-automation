@@ -207,7 +207,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Upload node docker image artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: node_image
           path: /tmp/node_image_${{ env.INPUT_UBUNTUVERSION }}.tar
@@ -274,7 +274,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Upload client docker image artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: client_image
           path: /tmp/client_image_${{ env.INPUT_UBUNTUVERSION }}.tar

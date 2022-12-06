@@ -70,7 +70,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_consensus.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_consensus
           path: test-result-indy-test-automation-test_consensus.txt
@@ -125,7 +125,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_freshness.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_freshness
           path: test-result-indy-test-automation-test_freshness.txt
@@ -180,7 +180,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_ledger.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_ledger
           path: test-result-indy-test-automation-test_ledger.txt
@@ -235,7 +235,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_off_ledger_signature.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_off_ledger_signature
           path: test-result-indy-test-automation-test_off_ledger_signature.txt
@@ -290,7 +290,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_roles.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_roles
           path: test-result-indy-test-automation-test_roles.txt
@@ -345,7 +345,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_state_proof.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_state_proof
           path: test-result-indy-test-automation-test_state_proof.txt
@@ -400,7 +400,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.test_vc.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_vc
           path: test-result-indy-test-automation-test_vc.txt
@@ -455,7 +455,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAdHocSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAdHocSuite
           path: test-result-indy-test-automation-TestAdHocSuite.txt
@@ -510,7 +510,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuditSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuditSuite
           path: test-result-indy-test-automation-TestAuditSuite.txt
@@ -565,7 +565,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapAttribSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapAttribSuite
           path: test-result-indy-test-automation-TestAuthMapAttribSuite.txt
@@ -620,7 +620,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapCredDefSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapCredDefSuite
           path: test-result-indy-test-automation-TestAuthMapCredDefSuite.txt
@@ -675,7 +675,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapMiscSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapMiscSuite
           path: test-result-indy-test-automation-TestAuthMapMiscSuite.txt
@@ -730,7 +730,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapNymSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapNymSuite
           path: test-result-indy-test-automation-TestAuthMapNymSuite.txt
@@ -785,7 +785,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapRevocRegDefSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapRevocRegDefSuite
           path: test-result-indy-test-automation-TestAuthMapRevocRegDefSuite.txt
@@ -840,7 +840,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapRevocRegEntrySuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapRevocRegEntrySuite
           path: test-result-indy-test-automation-TestAuthMapRevocRegEntrySuite.txt
@@ -895,7 +895,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapSchemaSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapSchemaSuite
           path: test-result-indy-test-automation-TestAuthMapSchemaSuite.txt
@@ -950,7 +950,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestAuthMapUpgradeSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestAuthMapUpgradeSuite
           path: test-result-indy-test-automation-TestAuthMapUpgradeSuite.txt
@@ -1005,7 +1005,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestCatchUpSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestCatchUpSuite
           path: test-result-indy-test-automation-TestCatchUpSuite.txt
@@ -1060,7 +1060,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestCatchUpSuiteExtended.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestCatchUpSuiteExtended
           path: test-result-indy-test-automation-TestCatchUpSuiteExtended.txt
@@ -1115,7 +1115,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestConsensusSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestConsensusSuite
           path: test-result-indy-test-automation-TestConsensusSuite.txt
@@ -1170,7 +1170,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestMultiSigSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestMultiSigSuite
           path: test-result-indy-test-automation-TestMultiSigSuite.txt
@@ -1225,7 +1225,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestProductionSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestProductionSuite
           path: test-result-indy-test-automation-TestProductionSuite.txt
@@ -1280,7 +1280,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestTAASuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestTAASuite
           path: test-result-indy-test-automation-TestTAASuite.txt
@@ -1335,7 +1335,7 @@ jobs:
       - name: Upload Detailed Test Failure Results
         # The test runner only emits the detailed test results if the tests fail.
         if: (steps.TestViewChangeSuite.outcome == 'failure') && failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-TestViewChangeSuite
           path: test-result-indy-test-automation-TestViewChangeSuite.txt
