@@ -41,8 +41,6 @@ image_repository="hyperledger/indy-test-automation"
 docker_compose_image_name="${image_repository}:docker-compose"
 
 node_env_variables=" \
-    NODE_REPO_COMPONENT \
-    NODE_SOVRIN_REPO_COMPONENT \
     INDY_PLENUM_VERSION \
     INDY_NODE_VERSION \
     UBUNTU_VERSION \
@@ -74,12 +72,10 @@ docker run -t --rm \
     -u "$user_id" \
     -e "IMAGE_REPOSITORY=$image_repository" \
     -e u_id="$user_id" \
-    -e NODE_REPO_COMPONENT \
     -e INDY_NODE_VERSION \
     -e INDY_PLENUM_VERSION \
     -e URSA_VERSION \
     -e PYTHON3_PYZMQ_VERSION \
-    -e NODE_SOVRIN_REPO_COMPONENT \
     -e UBUNTU_VERSION \
     "$docker_compose_image_name" docker-compose -f system/docker/docker-compose.yml build node
     

@@ -42,7 +42,6 @@ docker_compose_image_name="${image_repository}:docker-compose"
 
 
 client_env_variables=" \
-    CLIENT_SOVRIN_REPO_COMPONENT \
     LIBINDY_CRYPTO_VERSION \
     DIND_CONTAINER_REGISTRY \
     DIND_IMAGE_NAME\
@@ -73,7 +72,6 @@ docker run -t --rm \
     -u "$user_id" \
     -e "IMAGE_REPOSITORY=$image_repository" \
     -e u_id="$user_id" \
-    -e CLIENT_SOVRIN_REPO_COMPONENT \
     -e LIBINDY_VERSION \
     -e DIND_CONTAINER_REGISTRY \
     -e DIND_IMAGE_NAME \

@@ -10,25 +10,25 @@ on:
         type: string
         default: 'ubuntu-2004'
       libsovtokenJSON:
-        description: "JSON encoded libsovtoken variables: install, version, repoComponent"
+        description: "JSON encoded libsovtoken variables: install, version"
         required: true
         type: string
-        default: "{\"install\": \"yes\",  \"version\": \"1.0.5\", \"repoComponent\": \"dev\"}"
+        default: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
       tokenPluginJSON:
-        description: "JSON encoded token plugin variables: install, sovtokenVersion, sovtokenfeesVersion, repoComponent"
+        description: "JSON encoded token plugin variables: install, sovtokenVersion, sovtokenfeesVersion"
         required: true
         type: string
-        default: "{\"install\":\"yes\", \"sovtokenVersion\": \"1.2.0-dev1666268500\", \"sovtokenfeesVersion\":\"1.2.0-dev1666268500\", \"repoComponent\": \"dev\"}"
+        default: "{\"install\":\"yes\", \"sovtokenVersion\": \"1.2.0-dev1666268500\", \"sovtokenfeesVersion\":\"1.2.0-dev1666268500\"}"
       sovrinJSON:
-        description: "JSON encoded sovrin variables: install, clientRepoComponent, nodeRepoComponent"
+        description: "JSON encoded sovrin variables: install"
         required: true
         type: string
-        default: "{ \"install\": \"yes\", \"clientRepoComponent\": \"master\", \"nodeRepoComponent\": \"master\"}"
+        default: "{ \"install\": \"yes\"}"
       indyJSON:
-        description: "JSON encoded indy variables: nodeVersion, plenumVersion, ursaVersion, pyzmqVersion, nodeRepoComponent"
+        description: "JSON encoded indy variables: nodeVersion, plenumVersion, ursaVersion, pyzmqVersion"
         required: true
         type: string
-        default: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\", \"nodeRepoComponent\":\"rc\"}"
+        default: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
       libIndyVersion: 
         description: 'Version of Libindy'
         required: true
@@ -46,21 +46,21 @@ on:
         required: true
         default: 'ubuntu-2004'
       libsovtokenJSON:
-        description: "JSON encoded libsovtoken variables: install, version, repoComponent"
+        description: "JSON encoded libsovtoken variables: install, version"
         required: true
-        default: "{\"install\": \"yes\",  \"version\": \"1.0.5\", \"repoComponent\": \"dev\"}"
+        default: "{\"install\": \"yes\",  \"version\": \"1.0.5\"}"
       tokenPluginJSON:
-        desription: "JSON encoded token plugin variables: install, sovtokenVersion, sovtokenfessVersion, repoComponent"
+        desription: "JSON encoded token plugin variables: install, sovtokenVersion, sovtokenfessVersion"
         required: true
-        default: "{\"install\":\"yes\", \"sovtokenVersion\": \"1.2.0-dev1666268500\", \"sovtokenfeesVersion\":\"1.2.0-dev1666268500\", \"repoComponent\": \"dev\"}"
+        default: "{\"install\":\"yes\", \"sovtokenVersion\": \"1.2.0-dev1666268500\", \"sovtokenfeesVersion\":\"1.2.0-dev1666268500\", }"
       sovrinJSON:
-        description: "JSON encoded sovrin variables: install, clientRepoComponent, nodeRepoComponent"
+        description: "JSON encoded sovrin variables: install"
         required: true
-        default: "{ \"install\": \"yes\", \"clientRepoComponent\": \"master\", \"nodeRepoComponent\": \"master\"}"
+        default: "{ \"install\": \"yes\"}"
       indyJSON:
-        description: "JSON encoded indy variables: nodeVersion, plenumVersion, ursaVersion, pyzmqVersion, nodeRepoComponent"
+        description: "JSON encoded indy variables: nodeVersion, plenumVersion, ursaVersion, pyzmqVersion"
         required: true
-        default: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\", \"nodeRepoComponent\":\"rc\"}"
+        default: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
       libIndyVersion: 
         description: 'Version of Libindy'
         required: true
@@ -75,22 +75,17 @@ env:
   
   INPUT_LIBSOVTOKEN_INSTALL: ${{ fromJSON(inputs.libsovtokenJSON).install }} 
   INPUT_LIBSOVTOKEN_VERSION: ${{ fromJSON(inputs.libsovtokenJSON).version }}
-  INPUT_LIBSOVTOKEN_REPO_COMPONENT: ${{ fromJSON(inputs.libsovtokenJSON).repoComponent }}
   
   INPUT_TOKEN_PLUGINS_INSTALL: ${{ fromJSON(inputs.tokenPluginJSON).install }} 
   INPUT_SOVTOKEN_VERSION: ${{ fromJSON(inputs.tokenPluginJSON).sovtokenVersion }}
   INPUT_SOVTOKENFEES_VERSION: ${{ fromJSON(inputs.tokenPluginJSON).sovtokenFeesVersion }}
-  INPUT_SOVTOKEN_REPO_COMPONENT: ${{ fromJSON(inputs.tokenPluginJSON).repoComponent }}
 
   INPUT_SOVRIN_INSTALL: ${{ fromJSON(inputs.sovrinJSON).install }}
-  INPUT_CLIENTSOVRINREPOCOMPONENT: ${{ fromJSON(inputs.sovrinJSON).clientRepoComponent }}
-  INPUT_NODESOVRINREPOCOMPONENT:  ${{ fromJSON(inputs.sovrinJSON).nodeRepoComponent }}
 
   INPUT_NODEVERSION: ${{ fromJSON(inputs.indyJSON).nodeVersion }}
   INPUT_PLENUMVERSION: ${{ fromJSON(inputs.indyJSON).plenumVersion }}
   INPUT_URSAVERSION: ${{ fromJSON(inputs.indyJSON).ursaVersion }}
   INPUT_PYZMQVERSION: ${{ fromJSON(inputs.indyJSON).pyzmqVersion }}
-  INPUT_NODEREPOCOMPONENT: ${{ fromJSON(inputs.indyJSON).nodeRepoComponent }}
 
   INPUT_LIBINDYVERSION: ${{ inputs.libIndyVersion }}
   
@@ -239,17 +234,14 @@ jobs:
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
           build-args: |
-            NODE_REPO_COMPONENT=${{ env.INPUT_NODEREPOCOMPONENT }}
             INDY_NODE_VERSION=${{ env.INPUT_NODEVERSION }}
             INDY_PLENUM_VERSION=${{ env.INPUT_PLENUMVERSION }}
             TOKEN_PLUGINS_INSTALL=${{ env.INPUT_TOKEN_PLUGINS_INSTALL }}
             SOVRIN_INSTALL=${{ env.INPUT_SOVRIN_INSTALL }}
             SOVTOKEN_VERSION=${{ env.INPUT_SOVTOKEN_VERSION }}
             SOVTOKENFEES_VERSION=${{ env.INPUT_SOVTOKENFEES_VERSION }}
-            SOVTOKEN_REPO_COMPONENT=${{ env.INPUT_SOVTOKEN_REPO_COMPONENT }}
             URSA_VERSION=${{ env.INPUT_URSAVERSION }}
             PYTHON3_PYZMQ_VERSION=${{ env.INPUT_PYZMQVERSION }}
-            NODE_SOVRIN_REPO_COMPONENT=${{ env.INPUT_NODESOVRINREPOCOMPONENT}}
           outputs: type=docker,dest=/tmp/node_image_${{ env.INPUT_UBUNTUVERSION }}.tar
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
@@ -313,13 +305,11 @@ jobs:
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
           build-args: |
-            CLIENT_SOVRIN_REPO_COMPONENT=${{ env.INPUT_CLIENTSOVRINREPOCOMPONENT}}
             LIBINDY_VERSION=${{ env.INPUT_LIBINDYVERSION}}
             DIND_CONTAINER_REGISTRY=ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}
             DIND_IMAGE_NAME=dind:${{ env.INPUT_UBUNTUVERSION }}
             LIBSOVTOKEN_INSTALL=${{ env.INPUT_LIBSOVTOKEN_INSTALL }}
             LIBSOVTOKEN_VERSION=${{ env.INPUT_LIBSOVTOKEN_VERSION }}
-            LIBSOVTOKEN_REPO_COMPONENT=${{ env.INPUT_LIBSOVTOKEN_REPO_COMPONENT }}
           outputs: type=docker,dest=/tmp/client_image_${{ env.INPUT_UBUNTUVERSION }}.tar
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
