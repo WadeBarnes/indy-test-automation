@@ -117,7 +117,7 @@ else
 fi
 
 # Run tests
-docker run $docker_opts --rm --name "$client_container_name" \
+docker run $docker_opts --rm --privileged --name "$client_container_name" \
     --network "${test_network_name}" \
     --ip "10.0.0.99" \
     --group-add $docker_socket_user_group \
