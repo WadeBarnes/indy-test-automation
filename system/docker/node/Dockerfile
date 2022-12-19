@@ -33,8 +33,7 @@ ENV NODE_REPO_COMPONENT=${NODE_REPO_COMPONENT}
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3BC8C2DD662F1C45 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9692C00E657DDE61 && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9692C00E657DDE61
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 
 RUN echo "deb https://repo.sovrin.org/deb bionic ${NODE_REPO_COMPONENT}" >> /etc/apt/sources.list && \
     echo "deb http://security.ubuntu.com/ubuntu bionic-security main"  >> /etc/apt/sources.list && \
     echo "deb https://repo.sovrin.org/sdk/deb bionic master" >> /etc/apt/sources.list
