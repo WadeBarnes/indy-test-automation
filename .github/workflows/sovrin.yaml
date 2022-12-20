@@ -94,7 +94,7 @@ env:
 jobs:
   workflow-setup:
     name: Initialize Workflow
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       GITHUB_REPOSITORY_NAME: ${{ steps.repository-name.outputs.lowercase }}
       DIND_BUILD_ARG: ${{ steps.cache.outputs.DIND_BUILD_ARG}}
@@ -121,7 +121,7 @@ jobs:
   dind-image:
     name: Create DinD Image
     needs: workflow-setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env: 
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
       DIND_BUILD_ARG: ${{ needs.workflow-setup.outputs.DIND_BUILD_ARG }}
@@ -182,7 +182,7 @@ jobs:
   node-image:
     name: Create Node Image
     needs: workflow-setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env: 
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
     steps:
@@ -261,7 +261,7 @@ jobs:
   client-image:
     name: Create Client Image
     needs: [ workflow-setup, dind-image ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env: 
       CACHE_KEY_CLIENT: ${{ needs.workflow-setup.outputs.CACHE_KEY_CLIENT }}
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
@@ -332,7 +332,7 @@ jobs:
   tests:
     name: tests
     needs: [ workflow-setup, node-image, client-image]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env: 
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }} 
     steps:
