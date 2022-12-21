@@ -384,5 +384,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: detailed-test-result-test_consensus
-          path: test-result-indy-test-automation-test_consensus.txt
+          path: test-result-indy-test-automation.txt
           retention-days: 5
