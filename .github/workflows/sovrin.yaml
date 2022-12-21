@@ -367,7 +367,7 @@ jobs:
         id: test_consensus
         run: |
           cd ./system/docker
-          sudo UBUNTU_VERSION="${{ env.INPUT_UBUNTUVERSION }}" IMAGE_REPOSITORY="ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/" CLIENT_IMAGE="client:${{ env.INPUT_UBUNTUVERSION }}" NODE_IMAGE="node-${{ env.INPUT_UBUNTUVERSION }}" ./run.sh system/indy-node-tests/ "-l -v --junit-xml=test_consensus-report.xml --payments" indy-test-automation-network
+          UBUNTU_VERSION="${{ env.INPUT_UBUNTUVERSION }}" IMAGE_REPOSITORY="ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/" CLIENT_IMAGE="client:${{ env.INPUT_UBUNTUVERSION }}" NODE_IMAGE="node-${{ env.INPUT_UBUNTUVERSION }}" ./run.sh system/indy-node-tests/ "-l -v --junit-xml=test_consensus-report.xml --payments" indy-test-automation-network
 
       - name: Publish Test Report
         if: success() || failure()
