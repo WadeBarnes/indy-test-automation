@@ -358,7 +358,7 @@ jobs:
           # is not really needed, but left in to make
           # it clear the files are being ignored.
           # ==============================================
-          ignore_files_starts_with: "skip-"
+          ignore_files_starts_with: "skip-,TestEndorserSuite"
 
   ### 1 Job in workflow per test
   ### The tests rely on docker in docker with the fixed network name and fixed IP addresses.
@@ -426,4 +426,66 @@ jobs:
         with:
           name: detailed-test-result-test_consensus
           path: test-result-indy-test-automation-${{ matrix.module }}.txt
+          retention-days: 5
+
+  TestEndorserSuite:
+    name: TestEndorserSuite
+    needs: [ workflow-setup, node-image, client-image]
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
+    steps:
+      - name: Git checkout hyperledger/indy-test-automation
+        uses: actions/checkout@v3
+        with:
+          repository: wadebarnes/indy-test-automation
+          ref: ${{ env.TEST_AUTOMATION_BRANCH }}
+
+      - name: Create docker network
+        run: |
+          docker network create --subnet="10.0.0.0/24" "indy-test-automation-network"
+
+      - name: Download client artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: client_image
+          path: /tmp
+
+      - name: Download node artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: node_image
+          path: /tmp
+
+      - name: Load client and node image
+        run: |
+          docker load --input /tmp/client_image_${{ env.INPUT_UBUNTUVERSION }}.tar
+          docker load --input /tmp/node_image_${{ env.INPUT_UBUNTUVERSION }}.tar
+
+      - name: test
+        id: TestEndorserSuite
+        run: |
+          cd ./system/docker
+          UBUNTU_VERSION="${{ env.INPUT_UBUNTUVERSION }}" \
+          IMAGE_REPOSITORY="ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/" \
+          CLIENT_IMAGE="client:${{ env.INPUT_UBUNTUVERSION }}" \
+          NODE_IMAGE="node-${{ env.INPUT_UBUNTUVERSION }}" \
+          ./run.sh system/indy-node-tests/TestEndorserSuite.py "-l -v --junit-xml=TestEndorserSuite-report.xml --payments" indy-test-automation-network
+
+      - name: Publish Test Report
+        if: success() || failure()
+        uses: scacap/action-surefire-report@v1
+        continue-on-error: true
+        with:
+          check_name: TestEndorserSuite Test Report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: "*-report.xml"
+
+      - name: Upload Detailed Test Failure Results
+        # The test runner only emits the detailed test results if the tests fail.
+        if: (steps.TestEndorserSuite.outcome == 'failure') && failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: detailed-test-result-TestEndorserSuite
+          path: test-result-indy-test-automation-TestEndorserSuite.txt
           retention-days: 5
