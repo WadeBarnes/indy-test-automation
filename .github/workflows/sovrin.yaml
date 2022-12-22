@@ -326,9 +326,8 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache                     
 
-  ### 1 step in workflow  per test
+  ### 1 Job in workflow per test
   ### The tests rely on docker in docker with the fixed network name and fixed IP addresses. 
-  ### That's why the tests cannot be run in matrix mode because all tests would share the same host and same docker engine.
   MatrixTest:
     name: MatrixTest
     needs: [ workflow-setup, node-image, client-image]
@@ -338,6 +337,7 @@ jobs:
     strategy:
       matrix:
         module: [test_consensus, test_freshness, test_ledger, test_libsovtoken, test_off_ledger_signature, test_roles, test_state_proof, test_vc, TestAdHocSuite, TestAuthMapAttribSuite, TestAuthMapCredDefSuite, TestAuthMapMiscSuite, TestAuthMapNymSuite, TestAuthMapPluginsSuite, TestAuthMapRevocRegDefSuite, TestAuthMapRevocRegEntrySuite, TestAuthMapSchemaSuite, TestAuthMapUpgradeSuite, TestCatchUpSuite, TestCatchUpSuiteExtended, TestConsensusSuite, TestEndorserSuite, TestFeesSuite, TestLedgerSuite, TestMultiSigSuite, TestProductionSuite, TestTAASuite, TestViewChangeSuite]
+      fail-fast: false
     steps:
       - name: Git checkout hyperledger/indy-test-automation
         uses: actions/checkout@v3
