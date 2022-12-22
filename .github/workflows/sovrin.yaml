@@ -189,7 +189,7 @@ jobs:
       - name: Git checkout hyperledger/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: pschlarb/indy-test-automation
+          repository: wadebarnes/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Prepare image labels and tags
@@ -270,7 +270,7 @@ jobs:
       - name: Git checkout hyperledger/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: pschlarb/indy-test-automation
+          repository: wadebarnes/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Prepare image labels and tags
@@ -342,7 +342,7 @@ jobs:
       - name: Git checkout hyperledger/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: pschlarb/indy-test-automation
+          repository: wadebarnes/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Create docker network
