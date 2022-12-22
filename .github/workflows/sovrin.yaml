@@ -1,5 +1,5 @@
 name: indy-test-automation
-on: 
+on:
   # push:
   #   branches: [sovrin]
   workflow_call:
@@ -29,7 +29,7 @@ on:
         required: true
         type: string
         default: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
-      libIndyVersion: 
+      libIndyVersion:
         description: 'Version of Libindy'
         required: true
         type: string
@@ -61,7 +61,7 @@ on:
         description: "JSON encoded indy variables: nodeVersion, plenumVersion, ursaVersion, pyzmqVersion"
         required: true
         default: "{ \"nodeVersion\": \"1.13.2~rc3\", \"plenumVersion\" : \"1.13.1~rc2\", \"ursaVersion\": \"0.3.2-1\", \"pyzmqVersion\" : \"22.3.0\"}"
-      libIndyVersion: 
+      libIndyVersion:
         description: 'Version of Libindy'
         required: true
         default: "1.15.0~1625-bionic"
@@ -72,11 +72,11 @@ on:
 
 env:
   INPUT_UBUNTUVERSION: ${{ inputs.ubuntuVersion }}
-  
-  INPUT_LIBSOVTOKEN_INSTALL: ${{ fromJSON(inputs.libsovtokenJSON).install }} 
+
+  INPUT_LIBSOVTOKEN_INSTALL: ${{ fromJSON(inputs.libsovtokenJSON).install }}
   INPUT_LIBSOVTOKEN_VERSION: ${{ fromJSON(inputs.libsovtokenJSON).version }}
-  
-  INPUT_TOKEN_PLUGINS_INSTALL: ${{ fromJSON(inputs.tokenPluginJSON).install }} 
+
+  INPUT_TOKEN_PLUGINS_INSTALL: ${{ fromJSON(inputs.tokenPluginJSON).install }}
   INPUT_SOVTOKEN_VERSION: ${{ fromJSON(inputs.tokenPluginJSON).sovtokenVersion }}
   INPUT_SOVTOKENFEES_VERSION: ${{ fromJSON(inputs.tokenPluginJSON).sovtokenFeesVersion }}
 
@@ -88,8 +88,8 @@ env:
   INPUT_PYZMQVERSION: ${{ fromJSON(inputs.indyJSON).pyzmqVersion }}
 
   INPUT_LIBINDYVERSION: ${{ inputs.libIndyVersion }}
-  
-  TEST_AUTOMATION_BRANCH: ${{ inputs.testAutomationBranch }}  
+
+  TEST_AUTOMATION_BRANCH: ${{ inputs.testAutomationBranch }}
 
 jobs:
   workflow-setup:
@@ -117,12 +117,12 @@ jobs:
             echo "DIND_BUILD_ARG=20.04" >> $GITHUB_OUTPUT
             echo "distribution=focal" >> $GITHUB_OUTPUT
           fi
-          
+
   dind-image:
     name: Create DinD Image
     needs: workflow-setup
     runs-on: ubuntu-20.04
-    env: 
+    env:
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
       DIND_BUILD_ARG: ${{ needs.workflow-setup.outputs.DIND_BUILD_ARG }}
     steps:
@@ -130,7 +130,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: teracyhq/docker-files
-            
+
       - name: Prepare image labels and tags
         id: prep
         shell: bash
@@ -173,7 +173,7 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-      
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -183,7 +183,7 @@ jobs:
     name: Create Node Image
     needs: workflow-setup
     runs-on: ubuntu-20.04
-    env: 
+    env:
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
     steps:
       - name: Git checkout hyperledger/indy-test-automation
@@ -252,7 +252,7 @@ jobs:
           name: node_image
           path: /tmp/node_image_${{ env.INPUT_UBUNTUVERSION }}.tar
           retention-days: 1
-      
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -262,7 +262,7 @@ jobs:
     name: Create Client Image
     needs: [ workflow-setup, dind-image ]
     runs-on: ubuntu-20.04
-    env: 
+    env:
       CACHE_KEY_CLIENT: ${{ needs.workflow-setup.outputs.CACHE_KEY_CLIENT }}
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
       DIND_BUILD_ARG: ${{ needs.workflow-setup.outputs.DIND_BUILD_ARG }}
@@ -292,7 +292,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx
-          
+
       - name: Build and cache image
         uses: docker/build-push-action@v3
         with:
@@ -320,23 +320,57 @@ jobs:
           name: client_image
           path: /tmp/client_image_${{ env.INPUT_UBUNTUVERSION }}.tar
           retention-days: 1
-      
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache                     
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  get-test-modules:
+    name: Get Test Modules
+    runs-on: ubuntu-latest
+    outputs:
+      modules: ${{ steps.get-module-list.outputs.file_names }}
+    steps:
+      - name: Git checkout hyperledger/indy-test-automation
+        uses: actions/checkout@v3
+        with:
+          repository: wadebarnes/indy-test-automation
+          ref: ${{ env.TEST_AUTOMATION_BRANCH }}
+
+      - name: Get Module List
+        id: get-module-list
+        uses: the-coding-turtle/ga-file-list@v0.4.1
+        with:
+          directory: "system/indy-node-tests"
+          file_extension: "py"
+
+          # ==============================================
+          # Include all tests by default.
+          # ==============================================
+          only_files_starts_with: "test,Test"
+
+          # ==============================================
+          # Ignore specific test harnesses here
+          # ----------------------------------------------
+          # Ignore tests by renaming the file for the
+          # test to have a prefix of "skip-". Line below
+          # is not really needed, but left in to make
+          # it clear the files are being ignored.
+          # ==============================================
+          ignore_files_starts_with: "skip-"
 
   ### 1 Job in workflow per test
-  ### The tests rely on docker in docker with the fixed network name and fixed IP addresses. 
+  ### The tests rely on docker in docker with the fixed network name and fixed IP addresses.
   MatrixTest:
     name: MatrixTest
-    needs: [ workflow-setup, node-image, client-image]
+    needs: [ workflow-setup, node-image, client-image, get-test-modules]
     runs-on: ubuntu-20.04
-    env: 
-      GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }} 
+    env:
+      GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
     strategy:
       matrix:
-        module: [test_consensus, test_freshness, test_ledger, test_libsovtoken, test_off_ledger_signature, test_roles, test_state_proof, test_vc, TestAdHocSuite, TestAuthMapAttribSuite, TestAuthMapCredDefSuite, TestAuthMapMiscSuite, TestAuthMapNymSuite, TestAuthMapPluginsSuite, TestAuthMapRevocRegDefSuite, TestAuthMapRevocRegEntrySuite, TestAuthMapSchemaSuite, TestAuthMapUpgradeSuite, TestCatchUpSuite, TestCatchUpSuiteExtended, TestConsensusSuite, TestEndorserSuite, TestFeesSuite, TestLedgerSuite, TestMultiSigSuite, TestProductionSuite, TestTAASuite, TestViewChangeSuite]
+        module: ${{ fromJson(needs.get-test-modules.outputs.modules) }}
       fail-fast: false
     steps:
       - name: Git checkout hyperledger/indy-test-automation
@@ -370,14 +404,18 @@ jobs:
         id: test_Matrix
         run: |
           cd ./system/docker
-          UBUNTU_VERSION="${{ env.INPUT_UBUNTUVERSION }}" IMAGE_REPOSITORY="ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/" CLIENT_IMAGE="client:${{ env.INPUT_UBUNTUVERSION }}" NODE_IMAGE="node-${{ env.INPUT_UBUNTUVERSION }}" ./run.sh system/indy-node-tests/${{ matrix.module }}.py "-l -v --junit-xml=${{ matrix.module }}-report.xml --payments" indy-test-automation-network
+          UBUNTU_VERSION="${{ env.INPUT_UBUNTUVERSION }}" \
+          IMAGE_REPOSITORY="ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/" \
+          CLIENT_IMAGE="client:${{ env.INPUT_UBUNTUVERSION }}" \
+          NODE_IMAGE="node-${{ env.INPUT_UBUNTUVERSION }}" \
+          ./run.sh system/indy-node-tests/${{ matrix.module }}.py "-l -v --junit-xml=${{ matrix.module }}-report.xml --payments" indy-test-automation-network
 
       - name: Publish Test Report
         if: success() || failure()
         uses: scacap/action-surefire-report@v1
         continue-on-error: true
         with:
-          check_name: ${{ matrix.module }}Test Report
+          check_name: ${{ matrix.module }} Test Report
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_paths: "*-report.xml"
 
