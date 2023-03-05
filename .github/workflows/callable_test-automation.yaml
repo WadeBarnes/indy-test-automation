@@ -1,7 +1,7 @@
 name: indy-test-automation
 on:
   push:
-    branches: [payment-tests-separation]
+    branches: [main]
   workflow_call:
     inputs:
       ubuntuVersion:
@@ -44,11 +44,6 @@ on:
         required: false
         type: string
         default: "system/indy-node-tests"
-#      paymentTestDirectory:
-#        description: "The directory, relative to the indy-test-automantion project folder, containing the payment tests to be executed."
-#        required: false
-#        type: string
-#        default: "system_payments_only/indy-node-tests"
       includePaymentTests:
         description: "Include payment tests.  Defaults to false."
         required: false
@@ -106,11 +101,6 @@ on:
         required: false
         type: string
         default: "system/indy-node-tests"
-#      paymentTestDirectory:
-#        description: "The directory, relative to the indy-test-automantion project folder, containing the payment tests to be executed."
-#        required: false
-#        type: string
-#        default: "system_payments_only/indy-node-tests"
       includePaymentTests:
         description: "Include payment tests.  Defaults to false."
         required: false
@@ -123,32 +113,31 @@ on:
         default: "sovrin"
 
 env:
-  INPUT_UBUNTUVERSION: "ubuntu-2004"
+  INPUT_UBUNTUVERSION: ${{ inputs.ubuntuVersion }}
 
-  INPUT_LIBSOVTOKEN_INSTALL: "yes"
-  INPUT_LIBSOVTOKEN_VERSION: "1.0.5"
+  INPUT_LIBSOVTOKEN_INSTALL: ${{ fromJSON(inputs.libsovtokenJSON).install }}
+  INPUT_LIBSOVTOKEN_VERSION: ${{ fromJSON(inputs.libsovtokenJSON).version }}
 
-  INPUT_TOKEN_PLUGINS_INSTALL: "yes"
+  INPUT_TOKEN_PLUGINS_INSTALL: ${{ fromJSON(inputs.tokenPluginJSON).install }}
+  INPUT_SOVTOKEN_VERSION: ${{ fromJSON(inputs.tokenPluginJSON).sovtokenVersion }}
+  INPUT_SOVTOKENFEES_VERSION: ${{ fromJSON(inputs.tokenPluginJSON).sovtokenFeesVersion }}
 
-  INPUT_SOVTOKEN_VERSION: "1.1.0~rc0"
-  INPUT_SOVTOKENFEES_VERSION: "1.1.0~rc0"
+  INPUT_SOVRIN_INSTALL: ${{ fromJSON(inputs.sovrinJSON).install }}
 
-  INPUT_SOVRIN_INSTALL: "no"
+  INPUT_NODEVERSION: ${{ fromJSON(inputs.indyJSON).nodeVersion }}
+  INPUT_PLENUMVERSION: ${{ fromJSON(inputs.indyJSON).plenumVersion }}
+  INPUT_URSAVERSION: ${{ fromJSON(inputs.indyJSON).ursaVersion }}
+  INPUT_PYZMQVERSION: ${{ fromJSON(inputs.indyJSON).pyzmqVersion }}
 
-  INPUT_NODEVERSION: "1.13.2~rc5"
-  INPUT_PLENUMVERSION: "1.13.1~rc3"
-  INPUT_URSAVERSION: "0.3.2-1"
-  INPUT_PYZMQVERSION: "22.3.0"
+  INPUT_LIBINDYVERSION: ${{ inputs.libIndyVersion }}
 
-  INPUT_LIBINDYVERSION: "1.15.0~1625-bionic"
+  TEST_AUTOMATION_BRANCH: ${{ inputs.testAutomationBranch }}
 
-  TEST_AUTOMATION_BRANCH: "payment-tests-separation"
-
-  NETWORK_NAME: "indy-test-automation-network"
-  NETWORK_SUBNET: "10.0.0.0/24"
-  TEST_DIRECTORY: "system/indy-node-tests"
-  INCLUDE_PAYMENT_TESTS: true
-  TEST_DIRECTORY_PAYMENT: "system_payments_only/indy-node-tests"
+  NETWORK_NAME: ${{ fromJSON(inputs.networkJSON).networkName }}
+  NETWORK_SUBNET: ${{ fromJSON(inputs.networkJSON).networkSubnet }}
+  TEST_DIRECTORY: ${{ inputs.testDirectory }}
+  INCLUDE_PAYMENT_TESTS: ${{ inputs.includePaymentTests }}
+  TEST_DIRECTORY_PAYMENT: "system_payments_only/indy-node-tests" # keep sovrin token tests untouched and still depending on libsovtoken and libindy
 
 jobs:
   workflow-setup:
@@ -241,10 +230,10 @@ jobs:
     env:
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
     steps:
-      - name: Git checkout MeltedGlaciers/indy-test-automation
+      - name: Git checkout indy/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: MeltedGlaciers/indy-test-automation
+          repository: indy/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Prepare image labels and tags
@@ -268,11 +257,11 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx
-#      - name: Download Pipeline sovrin.deb artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: sovrin.deb
-#          path: ./system/docker/node/
+     - name: Download Pipeline sovrin.deb artifact
+       uses: actions/download-artifact@v3
+       with:
+         name: sovrin.deb
+         path: ./system/docker/node/
       - name: LS DEBUG
         run: ls ./system/docker/node/
       - name: Build and cache image
@@ -320,10 +309,10 @@ jobs:
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
       DIND_BUILD_ARG: ${{ needs.workflow-setup.outputs.DIND_BUILD_ARG }}
     steps:
-      - name: Git checkout MeltedGlaciers/indy-test-automation
+      - name: Git checkout indy/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: MeltedGlaciers/indy-test-automation
+          repository: indy/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Prepare image labels and tags
@@ -383,10 +372,10 @@ jobs:
       modules: ${{ steps.get-module-list.outputs.file_names }}
       payment-modules: ${{ steps.get-payment-module-list.outputs.file_names }}
     steps:
-      - name: Git checkout MeltedGlaciers/indy-test-automation
+      - name: Git checkout indy/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: MeltedGlaciers/indy-test-automation
+          repository: indy/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Get Module List
@@ -433,10 +422,10 @@ jobs:
         module: ${{ fromJson(needs.get-test-modules.outputs.modules) }}
       fail-fast: false
     steps:
-      - name: Git checkout MeltedGlaciers/indy-test-automation
+      - name: Git checkout indy/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: MeltedGlaciers/indy-test-automation
+          repository: indy/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Create docker network
@@ -500,10 +489,10 @@ jobs:
         module: ${{ fromJson(needs.get-test-modules.outputs.payment-modules) }}
       fail-fast: false
     steps:
-      - name: Git checkout MeltedGlaciers/indy-test-automation
+      - name: Git checkout indy/indy-test-automation
         uses: actions/checkout@v3
         with:
-          repository: MeltedGlaciers/indy-test-automation
+          repository: indy/indy-test-automation
           ref: ${{ env.TEST_AUTOMATION_BRANCH }}
 
       - name: Create docker network
