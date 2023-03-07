@@ -398,7 +398,7 @@ jobs:
           # is not really needed, but left in to make
           # it clear the files are being ignored.
           # ==============================================
-          ignore_files_starts_with: ""
+          ignore_files_starts_with: ${{ inputs.ignoreTests }}
 
       - name: Get Payment Module List
         id: get-payment-module-list
