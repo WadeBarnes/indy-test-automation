@@ -407,7 +407,7 @@ jobs:
           directory: ${{ env.TEST_DIRECTORY_PAYMENT }}
           file_extension: "py"
           only_files_starts_with: "test,Test"
-          ignore_files_starts_with: ""
+          ignore_files_starts_with: ${{ inputs.ignoreTests }}
 
   ### 1 Job in workflow per test
   ### The tests rely on docker in docker with the fixed network name and fixed IP addresses.
