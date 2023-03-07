@@ -1,4 +1,6 @@
-# System Tests
+# System Payments Only Tests
+
+This directory contains tests that still depend on the indy-sdk to work.  These tests are related to the Sovrin packages including the token plugins which have yet to be migrated to use the newer shared libraries.
 
 ## Environment variables
 
