@@ -1,7 +1,5 @@
 name: indy-test-automation
 on:
-  push:
-    branches: [main]
   workflow_call:
     inputs:
       ubuntuVersion:
