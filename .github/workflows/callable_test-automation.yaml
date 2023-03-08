@@ -307,7 +307,7 @@ jobs:
       GITHUB_REPOSITORY_NAME: ${{ needs.workflow-setup.outputs.GITHUB_REPOSITORY_NAME }}
       DIND_BUILD_ARG: ${{ needs.workflow-setup.outputs.DIND_BUILD_ARG }}
     steps:
-      - name: Git checkout indy/indy-test-automation
+      - name: Git checkout hyperledger/indy-test-automation
         uses: actions/checkout@v3
         with:
           repository: indy/indy-test-automation
