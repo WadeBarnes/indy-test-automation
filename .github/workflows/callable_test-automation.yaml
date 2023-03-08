@@ -370,7 +370,7 @@ jobs:
       modules: ${{ steps.get-module-list.outputs.file_names }}
       payment-modules: ${{ steps.get-payment-module-list.outputs.file_names }}
     steps:
-      - name: Git checkout indy/indy-test-automation
+      - name: Git checkout hyperledger/indy-test-automation
         uses: actions/checkout@v3
         with:
           repository: indy/indy-test-automation
