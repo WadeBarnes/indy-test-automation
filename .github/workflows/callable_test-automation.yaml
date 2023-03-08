@@ -420,7 +420,7 @@ jobs:
         module: ${{ fromJson(needs.get-test-modules.outputs.modules) }}
       fail-fast: false
     steps:
-      - name: Git checkout indy/indy-test-automation
+      - name: Git checkout hyperledger/indy-test-automation
         uses: actions/checkout@v3
         with:
           repository: indy/indy-test-automation
